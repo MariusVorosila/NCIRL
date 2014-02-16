@@ -10,7 +10,6 @@ while (1) {
 eval {
         local $SIG{ALRM} = sub { die "timeout\n" }; # NB: \n required
         my $func = @func[int rand @func];
-        print $func,"\n";
         ($c, $v, $t) = &$func;
         $timeout = gettar($t);
         alarm $timeout;
