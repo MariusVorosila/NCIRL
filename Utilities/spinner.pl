@@ -8,7 +8,7 @@ my $timeout = 7;
 print "Spinner. Version: $version. (C) FS 2014\n";
 
 my @func = qw(calc base10tobase2 base10tohex hextobase10 binarytobase10 hextobinary binarytohex calcbase2 calcbase16);
-my @func = qw(base10tobase2 base10tohex hextobase10 binarytobase10 hextobinary binarytohex calcbase2 calcbase16);
+my @func = qw(base10tobase2 base10tohex hextobase10 binarytobase10 hextobinary binarytohex calcbase2 calcbase16 complement2s);
 
 while (1) {
 eval {
@@ -120,7 +120,7 @@ return $c,$n2,$tar;
 sub calcbase2 {
 my $n1 = sprintf("%b",gen_random(1,255));
 my $n2 = sprintf("%b",gen_random(1,255));
-my @oplist = qw(+ - & | ^ ~);
+my @oplist = qw(* + - & | ^ ~);
 my @optariff = qw(B C B B B B);
 my $r = int rand @oplist;
 my $op = @oplist[$r];
@@ -157,6 +157,19 @@ my $v = sprintf("%x",eval($c1));
 return $c,$v,$tar;
 }
 
+sub complement2s {
+my $tar = 'B';
+my $v = gen_random(1,127);
+my $n1 = sprintf("%b",(~$v + 1) & 0xFF);
+my $c = "$v (base10) -> 2s complement";
+return $c,$n1,$tar;
+}
+
+
+
+sub dec_bin2s {
+return unpack "B8", pack "c", shift;
+}
 
 sub gen_random {
 my ($min, $max) = @_;
