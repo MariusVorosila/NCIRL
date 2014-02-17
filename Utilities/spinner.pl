@@ -1,19 +1,23 @@
 #!/usr/bin/perl
 
+my $version = "0.2";
 my $answer;
 my $c; my $v; my $t;
 my $timeout = 7;
 
+print "Spinner. Version: $version. (C) FS 2014\n";
+
 my @func = qw(calc base10tobase2 base10tohex hextobase10 binarytobase10 hextobinary binarytohex calcbase2 calcbase16);
+my @func = qw(base10tobase2 base10tohex hextobase10 binarytobase10 hextobinary binarytohex calcbase2 calcbase16);
 
 while (1) {
 eval {
         local $SIG{ALRM} = sub { die "timeout\n" }; # NB: \n required
         my $func = @func[int rand @func];
         ($c, $v, $t) = &$func;
-        $timeout = gettar($t);
+        $timeout = gettar($t); $timeout = 1000;
         alarm $timeout;
-        print $timeout,"\t",$c,": ";
+        print $c,": ";
         $answer = <STDIN>;
         chomp($answer);
         alarm 0;
@@ -101,7 +105,7 @@ my $v = gen_random(1,255);
 my $n1 = sprintf("%x",$v);
 my $n2 = sprintf("%b",$v);
 my $c = "$n1 (hex) -> binary";
-return $c,$v,$tar;
+return $c,$n2,$tar;
 }
 
 sub binarytohex{
@@ -110,7 +114,7 @@ my $v = gen_random(1,255);
 my $n1 = sprintf("%b",$v);
 my $n2 = sprintf("%x",$v);
 my $c = "$n1 (binary) -> hex";
-return $c,$v,$tar;
+return $c,$n2,$tar;
 }
 
 sub calcbase2 {
